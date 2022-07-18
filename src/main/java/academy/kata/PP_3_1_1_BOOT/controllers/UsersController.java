@@ -1,7 +1,7 @@
 package academy.kata.PP_3_1_1_BOOT.controllers;
 
 import academy.kata.PP_3_1_1_BOOT.model.User;
-import academy.kata.PP_3_1_1_BOOT.service.UsersService;
+import academy.kata.PP_3_1_1_BOOT.service.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +14,10 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 public class UsersController {
 
-    private final UsersService usersService;
+    private final UsersServiceImpl usersService;
 
     @Autowired
-    public UsersController(UsersService usersService) {
+    public UsersController(UsersServiceImpl usersService) {
         this.usersService = usersService;
     }
 
