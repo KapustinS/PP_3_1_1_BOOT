@@ -1,49 +1,50 @@
 package academy.kata.PP_3_1_1_BOOT.service;
 
+import academy.kata.PP_3_1_1_BOOT.dao.UserDao;
 import academy.kata.PP_3_1_1_BOOT.model.User;
-import academy.kata.PP_3_1_1_BOOT.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
-public class UsersServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
-    private final UsersRepository usersRepository;
+    private final UserDao userDao;
 
     @Autowired
-    public UsersServiceImpl(UsersRepository usersRepository) {
-        this.usersRepository = usersRepository;
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
-    public List<User> showAll(){
-        return usersRepository.findAll();
+
+    @Transactional
+    @Override
+    public void add(User user) {
+        userDao.add(user);
     }
 
-    public User showById(int id){
-        Optional<User> userOptional = usersRepository.findById(id);
-        return userOptional.orElse(null);
+    @Transactional(readOnly = true)
+    @Override
+    public List<User> listUsers() {
+        return userDao.listUsers();
+    }
+
+
+    public User showById(int id) {
+        return userDao.showById(id);
     }
 
     @Transactional
-    public void create(User user){
-        usersRepository.save(user);
-    }
-
-    @Transactional
-    public void update(User user, int id){
+    public void update(User user, int id) {
         user.setId(id);
-        usersRepository.save(user);
+        userDao.update(user);
     }
 
     @Transactional
-    public void delete(int id){
-        usersRepository.deleteById(id);
+    public void delete(int id) {
+        userDao.delete(id);
     }
 }
